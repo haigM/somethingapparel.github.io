@@ -1,1 +1,980 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asimov Apparel - Timeless Style for Tomorrow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ========================================
+           CSS VARIABLES & RESET
+        ======================================== */
+        :root {
+            --primary-color: #0a0a0a;      /* Deep black for high-end feel */
+            --secondary-color: #1a1a1a;    /* Dark gray */
+            --accent-color: #d4a537;       /* Gold accent for luxury */
+            --accent-hover: #b8942e;       /* Darker gold on hover */
+            --text-primary: #ffffff;       /* White text */
+            --text-secondary: #b8b8b8;     /* Light gray text */
+            --bg-primary: #ffffff;         /* White background */
+            --bg-secondary: #f8f8f8;       /* Off-white for sections */
+            --border-color: #e5e5e5;       /* Subtle borders */
+            --shadow-light: 0 4px 20px rgba(0,0,0,0.08);  /* Light shadow */
+            --shadow-medium: 0 8px 40px rgba(0,0,0,0.12); /* Medium shadow */
+            --shadow-heavy: 0 20px 60px rgba(0,0,0,0.15); /* Heavy shadow */
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth ease */
+            --border-radius: 12px;         /* Modern rounded corners */
+            --font-family: 'Inter', sans-serif;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px; /* Account for fixed header */
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.7;
+            color: var(--primary-color);
+            overflow-x: hidden;
+            background: var(--bg-primary);
+        }
+
+        /* ========================================
+           HEADER & NAVIGATION
+        ======================================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-light);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 400;
+            font-size: 1rem;
+            position: relative;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .built-with {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .built-with a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .built-with a:hover {
+            text-decoration: underline;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        /* ========================================
+           HERO SECTION
+        ======================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(10,10,10,0.6) 0%, rgba(26,26,26,0.4) 100%),
+                        url('https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            filter: blur(2px);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeInUp 1.2s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 300;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .cta {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--text-primary);
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            box-shadow: var(--shadow-medium);
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .cta:hover::before {
+            left: 100%;
+        }
+
+        .cta:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-heavy);
+            background: var(--accent-hover);
+        }
+
+        /* ========================================
+           PRODUCTS SECTION
+        ======================================== */
+        .products {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+        }
+
+        .products h2 {
+            text-align: center;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: var(--transition);
+        }
+
+        .product-grid.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-card {
+            background: var(--bg-primary);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 2rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info p {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-card button {
+            width: 100%;
+            background: var(--primary-color);
+            color: var(--text-primary);
+            border: none;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .product-card button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* ========================================
+           ABOUT SECTION
+        ======================================== */
+        .about {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image {
+            height: 400px;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover)),
+                        url('https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') center/cover;
+            border-radius: var(--border-radius);
+            opacity: 0.9;
+            transition: var(--transition);
+        }
+
+        .about-image:hover {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        /* ========================================
+           CONTACT SECTION
+        ======================================== */
+        .contact {
+            padding: 8rem 2rem;
+            background: var(--bg-secondary);
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 3rem;
+        }
+
+        .contact form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .contact input,
+        .contact textarea {
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: var(--transition);
+            background: var(--bg-primary);
+        }
+
+        .contact input:focus,
+        .contact textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(212, 165, 55, 0.1);
+        }
+
+        .contact button {
+            background: var(--accent-color);
+            color: var(--text-primary);
+            border: none;
+            padding: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .contact button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+        footer {
+            background: var(--primary-color);
+            color: var(--text-primary);
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-content a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-content a:hover {
+            color: var(--accent-color);
+        }
+
+        /* ========================================
+           MODAL FOR PRODUCT DETAILS (High-end lightbox)
+        ======================================== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 800px;
+            max-height: 90vh;
+            background: var(--bg-primary);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transform: scale(0.8);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN (Mobile-First Enhancements)
+        ======================================== */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--bg-primary);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 3rem;
+                transform: translateX(-100%);
+                opacity: 0;
+                visibility: hidden;
+                gap: 2rem;
+                box-shadow: var(--shadow-medium);
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .built-with {
+                order: -1;
+            }
+
+            .about {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            .products,
+            .about,
+            .contact {
+                padding: 4rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .modal {
+                padding: 1rem;
+            }
+        }
+
+        /* ========================================
+           ANIMATION UTILITIES (Using Intersection Observer)
+        ======================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: var(--transition);
+        }
+
+        .reveal.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loading spinner for form submit */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .spinner {
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 2px solid var(--text-primary);
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header id="header">
+        <nav>
+            <a href="#home" class="logo" aria-label="Asimov Apparel Home">Asimov Apparel</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#shop" class="nav-link">Shop</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="built-with">
+                <a href="https://huggingface.co/spaces/akhaliq/anycoder" target="_blank" rel="noopener noreferrer">Built with anycoder</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Timeless Style<br>for Tomorrow</h1>
+            <p>Elevate your wardrobe with minimalist apparel inspired by futuristic visionaries.</p>
+            <a href="#shop" class="cta">Discover Collection</a>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="shop" class="products">
+        <h2 class="reveal">Featured Collection</h2>
+        <div class="product-grid reveal" id="productGrid">
+            <div class="product-card" data-modal-img="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" data-title="Aether Jacket" data-price="$299" data-desc="Crafted from premium Italian wool with subtle sci-fi seams.">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Aether Jacket" loading="lazy">
+                <div class="product-info">
+                    <h3>Aether Jacket</h3>
+                    <p>$299</p>
+                    <button onclick="addToCart(this)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-modal-img="https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" data-title="Nova Shirt" data-price="$149" data-desc="Breathable cotton blend with asymmetric collar design.">
+                <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Nova Shirt" loading="lazy">
+                <div class="product-info">
+                    <h3>Nova Shirt</h3>
+                    <p>$149</p>
+                    <button onclick="addToCart(this)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-modal-img="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" data-title="Quantum Pants" data-price="$249" data-desc="Slim-fit trousers with reinforced knees for enduring style.">
+                <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Quantum Pants" loading="lazy">
+                <div class="product-info">
+                    <h3>Quantum Pants</h3>
+                    <p>$249</p>
+                    <button onclick="addToCart(this)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-modal-img="https://images.unsplash.com/photo-1529139578434-53c0b8af80e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" data-title="Stellar Hoodie" data-price="$189" data-desc="Oversized hoodie with embedded tech pockets.">
+                <img src="https://images.unsplash.com/photo-1529139578434-53c0b8af80e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Stellar Hoodie" loading="lazy">
+                <div class="product-info">
+                    <h3>Stellar Hoodie</h3>
+                    <p>$189</p>
+                    <button onclick="addToCart(this)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about reveal">
+        <div class="about-content">
+            <h2>About Asimov</h2>
+            <p>Inspired by Isaac Asimov's boundless imagination, Asimov Apparel fuses minimalist design with forward-thinking craftsmanship. Every piece is engineered for the modern pioneer—timeless, versatile, eternal.</p>
+            <p>Our collections are produced in limited runs using sustainable, high-grade materials sourced globally.</p>
+        </div>
+        <div class="about-image"></div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact reveal">
+        <h2>Get in Touch</h2>
+        <form id="contactForm">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea rows="5" placeholder="Your Message" required></textarea>
+            <div class="spinner" id="spinner"></div>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <a href="#shop">Shop</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+        <p>&copy; 2024 Asimov Apparel. All rights reserved.</p>
+    </footer>
+
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <img id="modalImg" src="" alt="">
+            <div class="modal-body">
+                <h2 id="modalTitle"></h2>
+                <p id="modalPrice" style="color: var(--accent-color); font-size: 1.5rem; font-weight: 700;"></p>
+                <p id="modalDesc"></p>
+                <button onclick="addToCartFromModal()" style="width: 100%; margin-top: 1rem;">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========================================
+        // GLOBAL VARIABLES & UTILITIES
+        // ========================================
+        const header = document.getElementById('header');
+        const navLinks = document.getElementById('navLinks');
+        const hamburger = document.getElementById('hamburger');
+        const productCards = document.querySelectorAll('.product-card');
+        const productGrid = document.getElementById('productGrid');
+        const productModal = document.getElementById('productModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalDesc = document.getElementById('modalDesc');
+        const closeModal = document.getElementById('closeModal');
+        const contactForm = document.getElementById('contactForm');
+        const spinner = document.getElementById('spinner');
+
+        let cart = []; // Simple cart array for demo
+
+        // ========================================
+        // HEADER SCROLL EFFECT
+        // ========================================
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // ========================================
+        // MOBILE HAMBURGER MENU
+        // ========================================
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        // ========================================
+        // SMOOTH SCROLL & ACTIVE NAV
+        // ========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ========================================
+        // REVEAL ANIMATIONS WITH INTERSECTION OBSERVER
+        // ========================================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Observe reveal elements
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Special handling for staggered product grid
+        const productObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('animate');
+                    }, index * 100);
+                    productObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        productObserver.observe(productGrid);
+
+        // ========================================
+        // PRODUCT MODAL FUNCTIONALITY
+        // ========================================
+        productCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('button')) { // Don't trigger on cart button
+                    const imgSrc = card.dataset.modalImg;
+                    const title = card.dataset.title;
+                    const price = card.dataset.price;
+                    const desc = card.dataset.desc;
+                    openModal(imgSrc, title, price, desc);
+                }
+            });
+        });
+
+        closeModal.addEventListener('click', closeModalFunc);
+        window.addEventListener('click', (e) => {
+            if (e.target === productModal) {
+                closeModalFunc();
+            }
+        });
+
+        function openModal(imgSrc, title, price, desc) {
+            modalImg.src = imgSrc;
+            modalTitle.textContent = title;
+            modalPrice.textContent = price;
+            modalDesc.textContent = desc;
+            productModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModalFunc() {
+            productModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ========================================
+        // CART FUNCTIONALITY (Demo)
+        // ========================================
+        function addToCart(button) {
+            const card = button.closest('.product-card');
+            const title = card.querySelector('h3').textContent;
+            const price = card.querySelector('p').textContent;
+            cart.push({ title, price });
+            button.textContent = 'Added!';
+            button.style.background = '#4CAF50';
+            setTimeout(() => {
+                button.textContent = 'Add to Cart';
+                button.style.background = '';
+            }, 1500);
+            updateCartCount();
+        }
+
+        function addToCartFromModal() {
+            // Reuse last opened product data or simulate
+            cart.push({ title: modalTitle.textContent, price: modalPrice.textContent });
+            updateCartCount();
+            closeModalFunc();
+        }
+
+        function updateCartCount() {
+            // Could add cart icon/count in header if desired
+            console.log(`Cart updated: ${cart.length} items`);
+        }
+
+        // ========================================
+        // CONTACT FORM HANDLING
+        // ========================================
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const button = contactForm.querySelector('button');
+            const originalText = button.textContent;
+            button.textContent = 'Sending...';
+            button.classList.add('loading');
+            spinner.style.display = 'block';
+
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            alert('Thank you! Your message has been sent. We\'ll get back to you soon.');
+            contactForm.reset();
+            button.textContent = originalText;
+            button.classList.remove('loading');
+            spinner.style.display = 'none';
+        });
+
+        // ========================================
+        // PERFORMANCE & PWA-LIKE ENHANCEMENTS
+        // ========================================
+        if ('serviceWorker' in navigator) {
+            // Optional: Add PWA service worker if needed
+        }
+
+        // Lazy load images beyond viewport
+        if ('IntersectionObserver' in window) {
+            const imgObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src || img.src;
+                        imgObserver.unobserve(img);
+                    }
+                });
+            });
+            document.querySelectorAll('img[loading="lazy"]').forEach(img => imgObserver.observe(img));
+        }
+
+        // Preload hero image for smoothness
+        const heroImg = new Image();
+        heroImg.src = 'https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80';
+    </script>
+</body>
+</html>
+```
